@@ -1,3 +1,72 @@
+:root {
+  --primary-green: #495e57;
+  --primary-yellow: #f4ce14;
+  --secondary-darkpink: #ee9972;
+  --secondary-lightpink: #fbdabb;
+  --highlight-color-1: #edefee;
+  --highlight-color-2: #333333;
+}
+
+html body {
+  margin:0;
+  padding:0;
+}
+
+.color-yellow {
+  color: var(--primary-yellow);
+}
+
+.color-green {
+  color: var(--primary-green);
+}
+
+.color-white {
+  color: white;
+}
+
+@font-face {
+  font-family: 'Markazi-Medium';
+  src: url('./fonts/MarkaziText-Medium.ttf') format('truetype');
+  /* Add additional font formats if available, such as woff, woff2, etc. */
+}
+
+@font-face {
+  font-family: 'Karla-Reg';
+  src: url('./fonts/Karla-Regular.ttf') format('truetype');
+  /* Add additional font formats if available, such as woff, woff2, etc. */
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  justify-content: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+
+.headline {
+  font-size: 40pt;
+  font-family: Markazi-Medium;
+}
+
+.lead-text, .card-title {
+  font-size: 18pt;
+  line-height: 1.5;
+}
+
+p {
+  font-family: Karla-Reg;
+}
+
 nav {
   display: flex;
   flex-direction: row;
@@ -16,10 +85,20 @@ nav {
   nav li {
     flex: 0 0 50%;
   }
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+.logo {
+  margin-top: -60px;
+  height: 100px;
+  width: 300px;
 }
 
 nav img {
-  height: 100px;
+  width: 100%;
 }
 
 nav ul {
@@ -58,7 +137,7 @@ nav div button {
 }
 
 .action-btn {
-  background-color: #F4CE14;
+  background-color: var(--primary-yellow);
   padding: 1rem;
   border-radius: 20px;
   font-size: 1.2rem;
@@ -67,7 +146,7 @@ nav div button {
 }
 
 .action-btn:hover {
-  background-color: #495E57;
+  background-color: var(--primary-green);
   color: white;
 }
 
@@ -78,7 +157,7 @@ nav div button {
 footer {
   display: flex;
   justify-content: space-between;
-  background: #495e57;
+  background: var(--primary-green);
   width: 100%;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -107,15 +186,21 @@ footer nav li a {
 }
 
 footer nav li a:hover {
-  color: #acacac;
+  color: var(--highlight-color-1);
 }
 
 footer section {
   margin: 2rem;
   color: white;
   font-size: 1.2rem;
+  text-align: center;
 }
 
+main {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
 
 
 

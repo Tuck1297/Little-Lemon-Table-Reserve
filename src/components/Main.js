@@ -1,8 +1,8 @@
-function Main() {
+function Main(props) {
     return (
         <>
             <main>
-                This is the Main
+                {props.children}
             </main>
         </>
     );

@@ -1,5 +1,10 @@
 import LemonLogo from "../assets/images/LittleLemon.png";
+import { useNavigate } from "react-router-dom";
 function Nav() {
+    const navigate = useNavigate();
+    const redirectToPage = () => {
+      navigate('/reserve-begin')
+    }
     return (
         <>
             <nav>
@@ -30,7 +35,7 @@ function Nav() {
                         <a href="/login">Login</a>
                     </li>
                     <li>
-                        <button className="action-btn">Reserve Now</button>
+                        <button className="action-btn" onClick={redirectToPage}>Reserve Now</button>
                         {/* <a href="/reserve">Reserve Now</a> */}
                     </li>
                     <li>
