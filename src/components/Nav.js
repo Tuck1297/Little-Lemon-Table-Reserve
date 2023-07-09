@@ -3,7 +3,19 @@ function Nav() {
     return (
         <>
             <nav>
-                <a href="/"><img src={LemonLogo} alt="Little Lemon Logo"></img></a>
+                <div className="logo">
+                    <a href="/"><img src={LemonLogo} alt="Little Lemon Logo"></img></a>
+                </div>
+                {/* <div>
+                    <button>
+                        <svg width={40} height={40} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 10H3" />
+                            <path d="M21 6H3" />
+                            <path d="M21 14H3" />
+                            <path d="M21 18H3" />
+                        </svg>
+                    </button>
+                </div> */}
                 <ul>
                     <li>
                         <a href="/">Home</a>
@@ -18,10 +30,12 @@ function Nav() {
                         <a href="/login">Login</a>
                     </li>
                     <li>
-                        <a href="/reserve">Reserve Now</a>
+                        <button className="action-btn">Reserve Now</button>
+                        {/* <a href="/reserve">Reserve Now</a> */}
                     </li>
                     <li>
-                        <a href="/order">Order Online</a>
+                        <button className="action-btn">Order Online</button>
+                        {/* <a href="/order">Order Online</a> */}
                     </li>
                 </ul>
             </nav>
