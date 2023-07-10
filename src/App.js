@@ -9,16 +9,19 @@ import Home from './pages/Home.js';
 import ReservationForms from './pages/ReservationForms.js';
 import ReservationConfirmation from './pages/ReservationConfirmation.js';
 import ReservationComplete from './pages/ReservationComplete.js';
+import {ReservationContextProvider} from './components/ReservationContext';
 
 function App() {
   return (
     <>
+    <ReservationContextProvider>
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/reserve-begin" element={<ReservationForms></ReservationForms>}></Route>
         <Route path="/reserve-confirm" element={<ReservationConfirmation></ReservationConfirmation>}></Route>
         <Route path="/reserve-complete" element={<ReservationComplete></ReservationComplete>}></Route>
       </Routes>
+      </ReservationContextProvider>
     </>
   );
 }
