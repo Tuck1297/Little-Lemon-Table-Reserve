@@ -1,10 +1,7 @@
 import './App.css';
 import './Home.css';
-
-import Header from "./components/Header";
-import Nav from "./components/Nav";
-import Main from "./components/Main";
-import Footer from "./components/Footer";
+import './ReservationForm.css';
+import './ReserveConfirmFinished.css';
 
 import {Routes, Route} from 'react-router-dom';
 

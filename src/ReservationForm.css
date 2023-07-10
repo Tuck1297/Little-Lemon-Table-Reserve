@@ -1,0 +1,304 @@
+.timeAndPeopleNumForms {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.arrow-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
+.arrow-btn-num {
+    text-align: center;
+    font-family: Karla-Reg;
+}
+
+.middle-colon {
+    margin-top: 1rem;
+    font-family: Karla-Reg;
+    font-size: 32pt;
+}
+
+.hour-min-numPeople-forms {
+    background-color: var(--primary-green);
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.hour-min-numPeople-forms h1 {
+    margin: 0;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.am-pm-btns-group {
+    display: flex;
+    justify-content: space-around;
+}
+
+.hour-min-selector {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--secondary-lightpink);
+    padding: 1rem;
+}
+
+.hour-min-selector h2 {
+    font-size: 18pt;
+    margin-top: 2.2rem;
+    font-family: Karla-Reg;
+}
+
+.people-group-selector {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+    background-color: var(--secondary-lightpink);
+    padding: 1rem;
+}
+
+.people-group-selector h2 {
+    font-size: 18pt;
+    margin-top: 2.1rem;
+    font-family: Karla-Reg;
+}
+
+.dropdown-group {
+    display: flex;
+    justify-content: space-around;
+}
+
+.column-50 {
+    flex-basis: 50%;
+    display: grid;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
+    .column-50 {
+        flex-basis: 100%;
+    }
+}
+
+.dropdown-content select {
+    padding: 1rem;
+    border: solid 1px var(--highlight-color-1);
+    border-radius: 20px;
+    font-size: 16pt;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+  .radio-group {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 10px;
+    margin-top: 2rem;
+    border: solid 1px rgba(0,0,0,0.1);
+    padding: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .radio-wrapper, .radio-wrapper-amfm {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    /* margin-right: 50px; */
+    margin-bottom: 50px;
+  }
+
+  .radio-wrapper input[type="radio"], 
+   .radio-wrapper-amfm input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .custom-radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    text-align: center;
+    display: grid;
+    align-items: center;
+    transition: 0.2s;
+  }
+
+  .radio-wrapper input[type="radio"]:checked ~ .custom-radio {
+    background-color: #2196F3;
+    color: white;
+  }
+
+    .custom-radio-amfm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 20px;
+    border: solid 1px white;
+    color: white;
+    background-color: var(--primary-green);
+    text-align: center;
+    display: grid;
+    align-items: center;
+    transition: 0.2s;
+  }
+
+  .custom-radio-amfm:hover{
+    background-color: var(--primary-yellow);
+    color: black;
+    border-color: black;
+  }
+
+  .custom-radio-amfm:active {
+    transform: scale(0.9);
+  }
+
+  .radio-wrapper-amfm input[type="radio"]:checked ~ .custom-radio-amfm {
+    background-color: var(--primary-yellow);
+    color: black;
+    border-color: black;
+  }
+
+.personal-info-form {
+    background-color: var(--highlight-color-1);
+    padding: 1rem;
+}
+
+.personal-info-form h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.text-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.personal-info-form section input,
+textarea {
+    border: none;
+    border-radius: 10px;
+    font-size: 16pt;
+    padding: 0.5rem;
+    margin: 1rem;
+}
+
+.textarea {
+    display: flex;
+    justify-content: center;
+}
+
+textarea {
+    width: 90%;
+    height: 100%;
+}
+
+.name-group, .contact-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.personalInfo p {
+    text-align: center;
+    font-size: 18pt;
+    font-family: Karla-Reg;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.occasionDropdown {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.checkbox-container {
+  margin-bottom: 10px;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.notification-options-group {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.checkmark {
+  display: inline-block;
+  width: 10rem;
+  height: 5rem;
+  border: 2px solid #ccc;
+  margin-right: 8px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: var(--secondary-darkpink);
+  position: relative;
+}
+
+.checkbox-text {
+position: absolute;
+  cursor: pointer;
+  margin-left: 10px;
+  width: 7rem;
+  text-align: center;
+}
+
+.checkbox-box {
+ position: absolute;
+ right: 10px;
+ top: 2rem;
+ width: 20px;
+ height: 20px;
+ border: solid 1px black;
+ background-color: white;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark {
+  background-color: var(--primary-yellow);
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 2rem;
+  right: 15px;
+  width: 6px;
+  height: 10px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin: 2px;
+}

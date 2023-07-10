@@ -1,0 +1,81 @@
+.parallax {
+  /* The image used */
+  background-image: url("./assets/images/restauranfood.jpg");
+
+  /* Set a specific height */
+  min-height: 200px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content-body {
+    height: fit-content;
+    background-color: var(--secondary-lightpink);
+    padding-bottom: 4rem;
+}
+
+.content-body .action-btn {
+    margin-top: 1rem;
+    width: fit-content;
+    font-size: 24pt;
+}
+
+.content-body .headline {
+    width: 100%;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.info-desc-group {
+    overflow-x: scroll;
+    margin: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table td {
+    font-size: 16pt;
+    font-family: Karla-Reg;
+}
+
+.goBackBtn button {
+    display: flex;
+    border: none;
+    background-color: transparent;
+}
+
+.goBackBtn button h1 {
+     margin-top: 0px;
+     margin-left: 0.5rem;
+}
+
+.goBackBtn button:hover {
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.custom-arrow {
+  width:70px;
+  margin-left: 1rem;
+  height:30px;
+  display: flex;
+  transform: rotate(180deg);
+}
+.custom-arrow:before {
+  content: "";
+  background: currentColor;
+  width:15px;
+  clip-path: polygon(0 10px,calc(100% - 15px) 10px,calc(100% - 15px) 0,100% 50%,calc(100% - 15px) 100%,calc(100% - 15px) calc(100% - 10px),0 calc(100% - 10px));
+  animation: a1 1.5s infinite linear;
+}
+@keyframes a1 {
+  90%,100%{flex-grow: 1}
+}
