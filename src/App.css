@@ -73,7 +73,7 @@ nav {
   width: 100%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 940px) {
   footer, nav {
     flex-direction: column;
     flex-wrap: wrap;
@@ -98,7 +98,8 @@ nav {
 }
 
 nav img {
-  width: 100%;
+  width: 300px;
+  height: 200px;
 }
 
 nav ul {

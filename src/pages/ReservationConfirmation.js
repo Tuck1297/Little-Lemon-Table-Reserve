@@ -2,7 +2,8 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
+import { submitAPI } from '../api.js';
 import { useEffect, useContext, useState, useRef } from "react";
 
 import { ReservationContext } from "../components/ReservationContext";
@@ -10,7 +11,7 @@ import { ReservationContext } from "../components/ReservationContext";
 
 function ReservationConfirmation() {
   const navigate = useNavigate();
-  const { shareData} = useContext(ReservationContext);
+  const { shareData } = useContext(ReservationContext);
   const [reservedTime, setReservedTime] = useState(null);
   const [groupSize, setGroupSize] = useState(null);
   const [numAdults, setNumAdults] = useState(null);
@@ -35,10 +36,17 @@ function ReservationConfirmation() {
   const handleSubmitReservation = () => {
     submitBtnRef.current.style.display = "none";
     loaderRef.current.classList.add('active');
-    loaderRef.current.addEventListener('animationend', function() {
-      checkRef.current.classList.add('active');
-    })
-
+    let submitAnswer = submitAPI(shareData);
+    if (submitAnswer) {
+      setTimeout(() => {
+        loaderRef.current.addEventListener('animationend', function () {
+          checkRef.current.classList.add('active');
+          setTimeout(() => {
+            redirectToPage('/');
+          }, 5000)
+        })
+      }, 2000);
+    }
   }
 
   useEffect(() => {
@@ -47,7 +55,7 @@ function ReservationConfirmation() {
       top: 0,
       behavior: 'smooth' // Optional, adds smooth scrolling effect
     });
-    setReservedTime(`${shareData.month}, ${shareData.day} ${shareData.year} at ${shareData.time}`);
+    setReservedTime(`${shareData.month}, ${shareData.day} ${shareData.year} at ${convertToStandardTime(shareData.time)}`);
     setGroupSize(shareData.children + shareData.adults);
     setNumAdults(shareData.adults);
     setNumChildren(shareData.children);
@@ -142,3 +150,14 @@ function ReservationConfirmation() {
 }
 
 export default ReservationConfirmation;
+
+function convertToStandardTime(militaryTime) {
+  if (militaryTime === null || militaryTime === undefined || militaryTime === "") return;
+  let hour = parseInt(militaryTime.substring(0, 2));
+  let minute = militaryTime.substring(3, 5);
+
+  let period = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12 || 12;
+
+  return `${hour}:${minute} ${period}`;
+}

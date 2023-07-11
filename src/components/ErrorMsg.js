@@ -1,8 +1,8 @@
 import {useEffect, useRef} from 'react';
-function ErrorMessage({message, display}) {
+function ErrorMessage({message, msgFunc}) {
     const errRef = useRef(null);
 useEffect(() => {
-    if (display == true) {
+    if (message !== "") {
         errRef.current.style.display = "";
     } else {
         errRef.current.style.display = "none"
@@ -12,6 +12,7 @@ useEffect(() => {
 const handleClose = (e) => {
     e.preventDefault();
     errRef.current.style.display = "none";
+    msgFunc("")
 }
 
     return(

@@ -8,11 +8,14 @@ import Dropdown from "../components/Dropdown";
 import ApiTimeFetch from "../components/ApiTimeFetch";
 import ErrorMessage from "../components/ErrorMsg";
 
-
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useContext, useEffect } from 'react';
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+var today = new Date();
+var thisMonth = today.getMonth();
+var thisYear = today.getFullYear();
+var thisDay = today.getDate();
 
 function ReservationForms() {
   const { shareData, updateSharedData } = useContext(ReservationContext);
@@ -23,10 +26,12 @@ function ReservationForms() {
   const [childState, setChildState] = useState(0);
   const [calMonthState, setCalMonthState] = useState(31);
   const [dayState, setDayState] = useState(null);
-  const yearDropdown = useRef(null);
-  const monthDropdown = useRef(null);
   const [dateState, setDateState] = useState(null);
   const [msgState, setMsgState] = useState("");
+  const [monthDropdownState, setMonthDropdownState] = useState(thisMonth);
+  
+  const yearDropdown = useRef(null);
+  const monthDropdown = useRef(null);
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
   const phoneRef = useRef(null);
@@ -35,15 +40,12 @@ function ReservationForms() {
   const requestRef = useRef(null);
   const allowCallTextRef = useRef(null);
   const allowEmailRef = useRef(null);
-  const amRef = useRef(null);
-  const pmRef = useRef(null);
 
   useEffect(() => {
-    const today = new Date();
-    yearDropdown.current.value = today.getFullYear();
-    monthDropdown.current.value = monthNames[today.getMonth()];
-    let radioBtn = document.getElementById(`DayRadio${today.getDate()}`);
-    setDayState(today.getDate());
+    yearDropdown.current.value = thisYear;
+    monthDropdown.current.value = monthNames[thisMonth];
+    let radioBtn = document.getElementById(`DayRadio${thisDay}`);
+    setDayState(thisDay);
     if (radioBtn) {
       radioBtn.checked = 'true';
     }
@@ -76,7 +78,7 @@ function ReservationForms() {
       }
   }, [shareData])
 
-  const authenticateData = (e) => {
+const authenticateData = (e) => {
     e.preventDefault();
 
     if (timeState == null) {
@@ -166,11 +168,9 @@ function ReservationForms() {
       return;
     }
     setDateState(`${year}-${month}-${day}`);
-    //setDateState
   }
 
   const handleAuthErrorMessage = (message) => {
-    console.log(message)
     setMsgState(message);
   }
 
@@ -215,6 +215,11 @@ function ReservationForms() {
       setCalMonthState(28);
     }
     updateDateState(dayState);
+    if (year === `${thisYear}`) {
+      setMonthDropdownState(thisMonth);
+    } else {
+      setMonthDropdownState(0)
+    }
   }
 
   function isLeapYear(year) {
@@ -284,18 +289,16 @@ function ReservationForms() {
   }
 
   const changeDayState = (e) => {
-    // setDayState(e.target.value);
     updateDateState(e.target.value);
   }
 
   const updateTimeState = (e) => {
-    // e.preventDefault();
-    console.log(e.target.value)
     setTimeState(e.target.value);
   }
+
   return (
     <>
-    <ErrorMessage message={msgState} display={msgState == "" ? false : true}></ErrorMessage>
+    <ErrorMessage msgFunc={handleAuthErrorMessage} message={msgState}></ErrorMessage>
       <Header></Header>
       <Nav></Nav>
       <Main>
@@ -331,12 +334,10 @@ function ReservationForms() {
           <div className="column-50">
             <form className="month-year-day-form">
               <section className="dropdown-group">
-                <Dropdown ref={monthDropdown} changeFunc={updateMonthSelectedState} defaultValTitle="Month" optionsArr={[
-                  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}></Dropdown>
-                <Dropdown ref={yearDropdown} changeFunc={updateMonthBasedOnYearChange} defaultValTitle="Year" optionsArr={[
-                  "2023", "2024", "2025"]}></Dropdown>
+                <Dropdown ref={monthDropdown} thisMonth={monthDropdownState} thisYear={thisYear} changeFunc={updateMonthSelectedState} defaultValTitle="Month" optionsArr={monthNames}></Dropdown>
+                <Dropdown ref={yearDropdown} thisYear={thisYear} changeFunc={updateMonthBasedOnYearChange} defaultValTitle="Year" optionsArr={[]}></Dropdown>
               </section>
-              <Calendar calDays={calMonthState} changeFunc={changeDayState}></Calendar>
+              <Calendar calDays={calMonthState} thisDay={thisDay} thisMonth={thisMonth} thisYear={thisYear} changeFunc={changeDayState}></Calendar>
             </form>
           </div>
         </section>

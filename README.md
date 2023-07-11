@@ -74,5 +74,3 @@ What left to do before continue:
 3. Do promise api unit tests
 4. Do authentication unit tests
 5. Burn through the rest no matter what to finish tonight...
-6. do hour translation
-7. do error message display bug fix
