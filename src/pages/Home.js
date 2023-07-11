@@ -34,7 +34,7 @@ function Home() {
                 food and classic cocktails in a lively but casual environment. the restaruant
                 features a locally-sourced menu with daily specials.
               </p>
-              <button className="action-btn hero-btn" onClick={redirectToPage}>Reserve Now</button>
+              <button aria-label="Reserve Now" aria-describedby="Make a table reservation at Little Lemon" className="action-btn hero-btn" onClick={redirectToPage}>Reserve Now</button>
             </div>
           </section>
           <section className="hero-column">
@@ -49,7 +49,7 @@ function Home() {
         <section className="specials">
           <header className="flex flex-wrap">
             <h1 className="headline">This weeks specials!</h1>
-            <button className="action-btn">Order Now</button>
+            <button aria-label="Order Now" aria-describedby="Submit an online order with us today to pick up or have delivered to you." className="action-btn">Order Now</button>
           </header>
           <section className="card-gallery">
             <div className="highlights-column">
@@ -65,7 +65,7 @@ function Home() {
                     every last ingredient has been sourced and is as
                     authentic as can be imagined.
                   </p>
-                  <button className="card-action-btn">Order Now</button>
+                  <button className="card-action-btn" aria-label="Order Now" aria-describedby="Submit an online order.">Order Now</button>
                 </section>
               </div>
             </div>
@@ -83,7 +83,7 @@ function Home() {
                     A Burst of Mediterranean Falvors, Perfectly Balanced for a
                     Refreshing and Healthy Culinary Escape.
                   </p>
-                  <button className="card-action-btn">Order Now</button>
+                  <button className="card-action-btn" aria-label="Order Now" aria-describedby="Submit an online order.">Order Now</button>
                 </section>
               </div>
             </div>
@@ -101,7 +101,7 @@ function Home() {
                     right amount of sweetness. Sip on the cool, tangy elixir that will brighten
                     your day and leave you craving more.
                   </p>
-                  <button className="card-action-btn">Order Now</button>
+                  <button className="card-action-btn" aria-label="Order Now" aria-describedby="Submit an online order.">Order Now</button>
                 </section>
               </div>
             </div>
@@ -111,7 +111,7 @@ function Home() {
         <section className="testimonials">
           <h1 className="headline">Testimonials</h1>
           <section className="testimonial-cards">
-            <div className="testimonial-card">
+            <div className="testimonial-card" aria-describedby="Four star review from Chad 234 saying that 'The food was great!'">
               <div className="testimonial-card-container">
                 <div className="star-group">
                   <span className="star">
@@ -140,7 +140,7 @@ function Home() {
                 </p>
               </div>
             </div>
-            <div className="testimonial-card">
+            <div className="testimonial-card" aria-describedby="Four star review from Angela84 who said 'I LOVED the food and atmosphere.">
               <div className="testimonial-card-container">
                 <div className="star-group">
                   <span className="star"><svg width={30} height={30} fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -167,7 +167,7 @@ function Home() {
                 </p>
               </div>
             </div>
-            <div className="testimonial-card">
+            <div className="testimonial-card" aria-describedby="Four star review from America83 who said that 'The Lomon Cake was just like the one my mother used to make.'">
               <div className="testimonial-card-container">
                 <div className="star-group">
                   <span className="star">
@@ -196,7 +196,7 @@ function Home() {
                 </p>
               </div>
             </div>
-            <div className="testimonial-card">
+            <div className="testimonial-card" aria-describedby="Three star review from Hoss34Dale who said that the 'The salads were really fresh!'">
               <div className="testimonial-card-container">
                 <div className="star-group">
                   <span className="star">

@@ -67,7 +67,7 @@ function ReservationConfirmation() {
       <Main>
         <section className="content-body">
           <div className="btn-container">
-            <button ref={submitBtnRef} onClick={handleSubmitReservation} className="action-btn">Submit Reservation</button>
+            <button aria-label="Submit Reservation to Little Lemon" ref={submitBtnRef} onClick={handleSubmitReservation} className="action-btn">Submit Reservation</button>
           </div>
           <div className="loader" ref={loaderRef}>
             <div className="check" ref={checkRef}>
@@ -76,7 +76,7 @@ function ReservationConfirmation() {
             </div>
           </div>
           <div className="goBackBtn">
-            <button onClick={() => redirectToPage('/reserve-begin')}><div className="custom-arrow"></div><h1>Go Back</h1></button>
+            <button aria-label="Go Back to previous reservation screen." onClick={() => redirectToPage('/reserve-begin')}><div className="custom-arrow"></div><h1>Go Back</h1></button>
           </div>
           <h1 className="headline">Request Summary</h1>
           <section className="info-desc-group">

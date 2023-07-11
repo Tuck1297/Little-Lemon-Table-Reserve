@@ -3,6 +3,10 @@ import Nav from "../components/Nav";
 import Main from "../components/Main";
 import Footer from "../components/Footer";
 import { ReservationContext } from "../components/ReservationContext";
+import Calendar from "../components/Calendar";
+import Dropdown from "../components/Dropdown";
+import { fetchAPI, submitAPI } from '../api.js';
+
 
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useContext, useEffect } from 'react';
@@ -31,6 +35,18 @@ function ReservationForms() {
   const allowEmailRef = useRef(null);
   const amRef = useRef(null);
   const pmRef = useRef(null);
+
+  useEffect(() => {
+    initializeTimes()
+  })
+
+  function initializeTimes() {
+    const today = new Date();
+const currentDate = today.toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
+const dateObject = new Date(currentDate); // Convert the 'currentDate' string to a Date object
+    let result = fetchAPI(dateObject)
+    console.log(result)
+  }
 
   useEffect(() => {
     if (Object.keys(shareData).length === 0) return;
@@ -329,54 +345,54 @@ function ReservationForms() {
               <p className="color-white">All Week: 11 AM - 7 PM</p>
               <section className="am-pm-btns-group">
                 <label className="radio-wrapper-ampm">
-                  <input type="radio" name="myRadio" id="radioOption1" ref={amRef} value="AM" onChange={changeAmPmState} />
+                  <input aria-label="AM Selection" type="radio" name="myRadio" id="radioOption1" ref={amRef} value="AM" onChange={changeAmPmState} />
                   <span className="custom-radio-ampm">AM</span>
                 </label>
                 <label className="radio-wrapper-ampm">
-                  <input type="radio" name="myRadio" id="radioOption1" ref={pmRef} value="PM" onChange={changeAmPmState} />
+                  <input aria-label="PM Selection" type="radio" name="myRadio" id="radioOption1" ref={pmRef} value="PM" onChange={changeAmPmState} />
                   <span className="custom-radio-ampm">PM</span>
                 </label>
               </section>
-              <section className="hour-min-selector">
+              <section className="hour-min-selector" aria-describedby="Button group to select hour for reservation.">
                 <h2><span className="required">*</span>Select a time:</h2>
                 <div className="hour-group">
-                  <button onClick={incrementHour} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <button aria-label="Increment Hour" onClick={incrementHour} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="m11.577 7.752-5.755 6.577c-.68.776-.128 1.99.903 1.99h11.51a1.2 1.2 0 0 0 .904-1.99l-5.755-6.576a1.2 1.2 0 0 0-1.807 0v-.001Z" />
                   </svg></button>
                   <div id="hour-element" className="arrow-btn-num">{hourState}</div>
-                  <button onClick={decrementHour} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <button aria-label="Decrement Hour" onClick={decrementHour} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.577 16.248 5.822 9.669c-.68-.774-.128-1.99.903-1.99h11.51a1.2 1.2 0 0 1 .904 1.992l-5.755 6.576a1.198 1.198 0 0 1-1.807 0Z" />
                   </svg></button>
                 </div>
                 <div className="middle-colon">:</div>
-                <div className="minute-group">
-                  <button onClick={incrementMin} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div className="minute-group" aria-describedby="Button group to select minute for reservation. Are grouped in 15 minute increments.">
+                  <button aria-label="Increment Minutes" onClick={incrementMin} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="m11.577 7.752-5.755 6.577c-.68.776-.128 1.99.903 1.99h11.51a1.2 1.2 0 0 0 .904-1.99l-5.755-6.576a1.2 1.2 0 0 0-1.807 0v-.001Z" />
                   </svg></button>
                   <div id="minute-element" className="arrow-btn-num">{minState === 0 ? "00" : minState}</div>
-                  <button onClick={decrementMin} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <button aria-label="Decrement Minutes" onClick={decrementMin} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.577 16.248 5.822 9.669c-.68-.774-.128-1.99.903-1.99h11.51a1.2 1.2 0 0 1 .904 1.992l-5.755 6.576a1.198 1.198 0 0 1-1.807 0Z" />
                   </svg></button>
                 </div>
               </section>
-              <section className="people-group-selector">
+              <section className="people-group-selector" aria-describedby="Button Group to select how many adults and children are in the reservation group.">
                 <h2><span className="required">*</span>Adults:</h2>
                 <div className="adult-group">
-                  <button onClick={incrementAdult} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <button aria-label="Increment Adult Count" onClick={incrementAdult} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="m11.577 7.752-5.755 6.577c-.68.776-.128 1.99.903 1.99h11.51a1.2 1.2 0 0 0 .904-1.99l-5.755-6.576a1.2 1.2 0 0 0-1.807 0v-.001Z" />
                   </svg></button>
                   <div id="adult-element" className="arrow-btn-num">{adultState}</div>
-                  <button onClick={decrementAdult} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <button aria-label="Decrement Adult Count" onClick={decrementAdult} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.577 16.248 5.822 9.669c-.68-.774-.128-1.99.903-1.99h11.51a1.2 1.2 0 0 1 .904 1.992l-5.755 6.576a1.198 1.198 0 0 1-1.807 0Z" />
                   </svg></button>
                 </div>
                 <h2><span className="required">*</span>Children:</h2>
                 <div className="child-group">
-                  <button onClick={incrementChild} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <button aria-label="Increment Child Count" onClick={incrementChild} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="m11.577 7.752-5.755 6.577c-.68.776-.128 1.99.903 1.99h11.51a1.2 1.2 0 0 0 .904-1.99l-5.755-6.576a1.2 1.2 0 0 0-1.807 0v-.001Z" />
                   </svg></button>
                   <div id="children-element" className="arrow-btn-num">{childState}</div>
-                  <button onClick={decrementChild} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <button aria-label="Decrement Child Count" onClick={decrementChild} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M11.577 16.248 5.822 9.669c-.68-.774-.128-1.99.903-1.99h11.51a1.2 1.2 0 0 1 .904 1.992l-5.755 6.576a1.198 1.198 0 0 1-1.807 0Z" />
                   </svg></button>
                 </div>
@@ -386,52 +402,12 @@ function ReservationForms() {
           <div className="column-50">
             <form className="month-year-day-form">
               <section className="dropdown-group">
-                <div className="dropdown">
-                  <span className="required">*</span>
-                  <div className="dropdown-content">
-                    <select ref={monthDropdown} defaultValue="" onChange={updateMonthSelectedState}>
-                      <option value="" disabled>Month</option>
-                      <option value="January">January</option>
-                      <option value="February">February</option>
-                      <option value="March">March</option>
-                      <option value="April">April</option>
-                      <option value="May">May</option>
-                      <option value="June">June</option>
-                      <option value="July">July</option>
-                      <option value="August">August</option>
-                      <option value="September">September</option>
-                      <option value="October">October</option>
-                      <option value="November">November</option>
-                      <option value="December">December</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="dropdown">
-                  <span className="required">*</span>
-                  <div className="dropdown-content">
-                    <select defaultValue="" ref={yearDropdown} onChange={updateMonthBasedOnYearChange}>
-                      <option value="" disabled>Year</option>
-                      <option value="2023">2023</option>
-                      <option value="2024">2024</option>
-                      <option value="2025">2025</option>
-                    </select>
-                  </div>
-                </div>
+                <Dropdown ref={monthDropdown} changeFunc={updateMonthSelectedState} defaultValTitle="Month" optionsArr={[
+                  "January" , "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}></Dropdown>
+                <Dropdown ref={yearDropdown} changeFunc={updateMonthBasedOnYearChange} defaultValTitle="Year" optionsArr={[
+                  "2023", "2024", "2025"]}></Dropdown>
               </section>
-              <section className="interactive-day-selector">
-                <div className="calendar">
-                  <div className="radio-group">
-                    {Array.from({ length: calMonthState }, (_, index) => {
-                      return (
-                        <label key={index} className="radio-wrapper">
-                          <input type="radio" name="myRadio" id={`DayRadio${index+1}`} onChange={changeDayState} value={index + 1} />
-                          <span className="custom-radio">{index + 1}</span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-              </section>
+              <Calendar calDays={calMonthState} changeFunc={changeDayState}></Calendar>
             </form>
           </div>
         </section>
@@ -493,7 +469,7 @@ function ReservationForms() {
               </div>
             </section>
             <div className="btn-container">
-              <button className="action-btn" onClick={authenticateData}>Review Request</button>
+              <button aria-label="Review Reservation" aria-describedby="Submit Reservation to review page before submitting to restaurant." className="action-btn" onClick={authenticateData}>Review Request</button>
             </div>
           </form>
         </section>
