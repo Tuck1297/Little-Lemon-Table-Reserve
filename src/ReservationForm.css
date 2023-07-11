@@ -233,6 +233,14 @@ textarea {
 .name-group, .contact-group {
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.name-group label, .contact-group label {
+  font-size: 16pt;
+  font-family: Karla-Reg;
+  position: absolute;
+  margin-top: -1rem;
 }
 
 .personalInfo p {

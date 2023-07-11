@@ -308,8 +308,8 @@ const authenticateData = (e) => {
               <h1 className="headline">Choose Your Time:</h1>
               <ApiTimeFetch updateTimeState={updateTimeState} date={dateState}></ApiTimeFetch>
               <section className="people-group-selector" aria-describedby="Button Group to select how many adults and children are in the reservation group.">
-                <h2><span className="required">*</span>Adults:</h2>
-                <div className="adult-group">
+                <h2><span className="required">*</span><label htmlFor="Adult Selector">Adults:</label></h2>
+                <div className="adult-group" name="Adult Selector">
                   <button aria-label="Increment Adult Count" onClick={incrementAdult} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="m11.577 7.752-5.755 6.577c-.68.776-.128 1.99.903 1.99h11.51a1.2 1.2 0 0 0 .904-1.99l-5.755-6.576a1.2 1.2 0 0 0-1.807 0v-.001Z" />
                   </svg></button>
@@ -318,8 +318,8 @@ const authenticateData = (e) => {
                     <path d="M11.577 16.248 5.822 9.669c-.68-.774-.128-1.99.903-1.99h11.51a1.2 1.2 0 0 1 .904 1.992l-5.755 6.576a1.198 1.198 0 0 1-1.807 0Z" />
                   </svg></button>
                 </div>
-                <h2><span className="required">*</span>Children:</h2>
-                <div className="child-group">
+                <h2><span className="required">*</span><label htmlFor="Children Selector">Children:</label></h2>
+                <div className="child-group" name="Children Selector">
                   <button aria-label="Increment Child Count" onClick={incrementChild} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="m11.577 7.752-5.755 6.577c-.68.776-.128 1.99.903 1.99h11.51a1.2 1.2 0 0 0 .904-1.99l-5.755-6.576a1.2 1.2 0 0 0-1.807 0v-.001Z" />
                   </svg></button>
@@ -348,20 +348,24 @@ const authenticateData = (e) => {
               <section className="name-group">
                 <div className="input-group">
                   <span className="required">*</span>
+                  <label htmlFor="firstname">First Name</label>
                   <input type="text" name="firstname" placeholder="First Name" ref={firstNameRef}></input>
                 </div>
                 <div className="input-group">
                   <span className="required">*</span>
+                  <label htmlFor="lastname">Last Name</label>
                   <input type="text" name="lastname" placeholder="Last Name" ref={lastNameRef}></input>
                 </div>
               </section>
               <section className="contact-group">
                 <div className="input-group">
                   <span className="required">*</span>
+                  <label htmlFor="telephonenumber">Phone Number</label>
                   <input type="tel" name="telephonenumber" placeholder="Phone Number" ref={phoneRef}></input>
                 </div>
                 <div className="input-group">
                   <span className="required">*</span>
+                  <label htmlFor="email">Email Address</label>
                   <input type="email" name="email" placeholder="Email" ref={emailRef}></input>
                 </div>
               </section>
