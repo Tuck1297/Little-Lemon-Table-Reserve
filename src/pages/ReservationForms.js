@@ -5,26 +5,28 @@ import Footer from "../components/Footer";
 import { ReservationContext } from "../components/ReservationContext";
 import Calendar from "../components/Calendar";
 import Dropdown from "../components/Dropdown";
-import { fetchAPI, submitAPI } from '../api.js';
+import ApiTimeFetch from "../components/ApiTimeFetch";
+import ErrorMessage from "../components/ErrorMsg";
 
 
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useContext, useEffect } from 'react';
 
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 function ReservationForms() {
   const { shareData, updateSharedData } = useContext(ReservationContext);
 
   const navigate = useNavigate();
-  const [hourState, setHourState] = useState(12);
-  const [minState, setMinState] = useState(0);
+  const [timeState, setTimeState] = useState(null);
   const [adultState, setAdultState] = useState(2);
   const [childState, setChildState] = useState(0);
   const [calMonthState, setCalMonthState] = useState(31);
-  const [ampmState, setAmPmState] = useState(null);
   const [dayState, setDayState] = useState(null);
   const yearDropdown = useRef(null);
   const monthDropdown = useRef(null);
+  const [dateState, setDateState] = useState(null);
+  const [msgState, setMsgState] = useState("");
   const firstNameRef = useRef(null);
   const lastNameRef = useRef(null);
   const phoneRef = useRef(null);
@@ -37,67 +39,48 @@ function ReservationForms() {
   const pmRef = useRef(null);
 
   useEffect(() => {
-    initializeTimes()
-  })
-
-  function initializeTimes() {
     const today = new Date();
-const currentDate = today.toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
-const dateObject = new Date(currentDate); // Convert the 'currentDate' string to a Date object
-    let result = fetchAPI(dateObject)
-    console.log(result)
-  }
-
-  useEffect(() => {
-    if (Object.keys(shareData).length === 0) return;
-    setHourState(shareData.hour);
-    setMinState(shareData.min);
-    setAdultState(shareData.adults);
-    setChildState(shareData.children);
-    yearDropdown.current.value = shareData.year;
-    monthDropdown.current.value = shareData.month;
-    occasionRef.current.value = shareData.occasion;
-    firstNameRef.current.value = shareData.firstName;
-    lastNameRef.current.value = shareData.lastName;
-    phoneRef.current.value = shareData.phoneNum;
-    emailRef.current.value = shareData.email;
-    requestRef.current.value = shareData.otherRequests;
-    allowCallTextRef.current.checked = shareData.allowCallTextMsg;
-    allowEmailRef.current.checked = shareData.allowEmail;
-    if (shareData.ampm === "AM") {
-      amRef.current.checked = true;
-      setAmPmState('AM')
-    } else {
-      pmRef.current.checked = true;
-      setAmPmState('PM')
-    }
-    let radioBtn = document.getElementById(`DayRadio${shareData.day}`);
-    setDayState(shareData.day);
+    yearDropdown.current.value = today.getFullYear();
+    monthDropdown.current.value = monthNames[today.getMonth()];
+    let radioBtn = document.getElementById(`DayRadio${today.getDate()}`);
+    setDayState(today.getDate());
     if (radioBtn) {
       radioBtn.checked = 'true';
     }
-    if (isLeapYear(shareData.year) && shareData.month === "February") {
-      setCalMonthState(29);
-    } else if (shareData.month === "February") {
-      setCalMonthState(28);
-    }
+  }, [])
+
+  useEffect(() => {
+    if (Object.keys(shareData).length === 0) return;
+      setTimeState(null);
+      setAdultState(shareData.adults);
+      setChildState(shareData.children);
+      yearDropdown.current.value = shareData.year;
+      monthDropdown.current.value = shareData.month;
+      occasionRef.current.value = shareData.occasion;
+      firstNameRef.current.value = shareData.firstName;
+      lastNameRef.current.value = shareData.lastName;
+      phoneRef.current.value = shareData.phoneNum;
+      emailRef.current.value = shareData.email;
+      requestRef.current.value = shareData.otherRequests;
+      allowCallTextRef.current.checked = shareData.allowCallTextMsg;
+      allowEmailRef.current.checked = shareData.allowEmail;
+      let radioBtn = document.getElementById(`DayRadio${shareData.day}`);
+      setDayState(shareData.day);
+      if (radioBtn) {
+        radioBtn.checked = 'true';
+      }
+      if (isLeapYear(shareData.year) && shareData.month === "February") {
+        setCalMonthState(29);
+      } else if (shareData.month === "February") {
+        setCalMonthState(28);
+      }
   }, [shareData])
 
   const authenticateData = (e) => {
     e.preventDefault();
 
-    if ((ampmState === 'AM' && hourState < 11) || (ampmState === 'AM' && hourState === 12)) {
-      handleAuthErrorMessage('Sorry, we are not open during this time.');
-      return;
-    } else if (ampmState === 'PM' && hourState >= 6) {
-      if (hourState !== 12) {
-        handleAuthErrorMessage('Sorry, we stop taking reservations at 6 PM');
-        return;
-      }
-    }
-
-    if (ampmState === null) {
-      handleAuthErrorMessage("Please select if your reservation will be in the morning or afternoon.")
+    if (timeState == null) {
+      handleAuthErrorMessage('Please select an available time.');
       return;
     }
 
@@ -152,9 +135,7 @@ const dateObject = new Date(currentDate); // Convert the 'currentDate' string to
       year: yearDropdown.current.value,
       month: monthDropdown.current.value,
       day: dayState,
-      hour: hourState,
-      min: minState,
-      ampm: ampmState,
+      time: timeState,
       adults: adultState,
       children: childState,
       occasion: occasionRef.current.value,
@@ -170,8 +151,27 @@ const dateObject = new Date(currentDate); // Convert the 'currentDate' string to
     redirectToPage();
   }
 
+  const updateDateState = (dayVal) => {
+    const year = yearDropdown.current.value;
+    const month = monthDropdown.current.value;
+    const day = dayVal
+    setDayState(dayVal);
+    if ((year === null) || (year === undefined) || (year === "")) {
+      return;
+    }
+    if ((month === null) || (month === undefined) || (month === "")) {
+      return;
+    }
+    if ((day === null) || (day === undefined) || (day === "")) {
+      return;
+    }
+    setDateState(`${year}-${month}-${day}`);
+    //setDateState
+  }
+
   const handleAuthErrorMessage = (message) => {
     console.log(message)
+    setMsgState(message);
   }
 
   const updateMonthSelectedState = (e) => {
@@ -202,6 +202,7 @@ const dateObject = new Date(currentDate); // Convert the 'currentDate' string to
         setCalMonthState(28);
       }
     }
+    updateDateState(dayState);
   }
 
   const updateMonthBasedOnYearChange = (e) => {
@@ -213,6 +214,7 @@ const dateObject = new Date(currentDate); // Convert the 'currentDate' string to
     } else if (monthDropdown.current.value === "February") {
       setCalMonthState(28);
     }
+    updateDateState(dayState);
   }
 
   function isLeapYear(year) {
@@ -235,50 +237,6 @@ const dateObject = new Date(currentDate); // Convert the 'currentDate' string to
     navigate('/reserve-confirm')
   }
 
-  const incrementHour = (e) => {
-    e.preventDefault();
-    let currentHourState = hourState;
-    let updatedHourState;
-    if (currentHourState === 12) {
-      updatedHourState = 1;
-    } else {
-      updatedHourState = currentHourState + 1;
-    }
-    setHourState(updatedHourState)
-  }
-  const decrementHour = (e) => {
-    e.preventDefault();
-    let currentHourState = hourState;
-    let updatedHourState;
-    if (currentHourState === 1) {
-      updatedHourState = 12;
-    } else {
-      updatedHourState = currentHourState - 1;
-    }
-    setHourState(updatedHourState);
-  }
-  const incrementMin = (e) => {
-    e.preventDefault();
-    let currentMinState = minState;
-    let updatedMinState;
-    if (currentMinState === 45) {
-      updatedMinState = 0;
-    } else {
-      updatedMinState = currentMinState + 15;
-    }
-    setMinState(updatedMinState);
-  }
-  const decrementMin = (e) => {
-    e.preventDefault();
-    let currentMinState = minState;
-    let updatedMinState;
-    if (currentMinState === 0) {
-      updatedMinState = 45;
-    } else {
-      updatedMinState = currentMinState - 15;
-    }
-    setMinState(updatedMinState);
-  }
   const incrementAdult = (e) => {
     e.preventDefault();
     let currentAdultState = adultState;
@@ -325,15 +283,19 @@ const dateObject = new Date(currentDate); // Convert the 'currentDate' string to
     setChildState(updatedChildState);
   }
 
-  const changeAmPmState = (e) => {
-    setAmPmState(e.target.value);
+  const changeDayState = (e) => {
+    // setDayState(e.target.value);
+    updateDateState(e.target.value);
   }
 
-  const changeDayState = (e) => {
-    setDayState(e.target.value);
+  const updateTimeState = (e) => {
+    // e.preventDefault();
+    console.log(e.target.value)
+    setTimeState(e.target.value);
   }
   return (
     <>
+    <ErrorMessage message={msgState} display={msgState == "" ? false : true}></ErrorMessage>
       <Header></Header>
       <Nav></Nav>
       <Main>
@@ -341,40 +303,7 @@ const dateObject = new Date(currentDate); // Convert the 'currentDate' string to
           <div className="column-50">
             <form className="hour-min-numPeople-forms">
               <h1 className="headline">Choose Your Time:</h1>
-              <p className="color-white">Our current hours:</p>
-              <p className="color-white">All Week: 11 AM - 7 PM</p>
-              <section className="am-pm-btns-group">
-                <label className="radio-wrapper-ampm">
-                  <input aria-label="AM Selection" type="radio" name="myRadio" id="radioOption1" ref={amRef} value="AM" onChange={changeAmPmState} />
-                  <span className="custom-radio-ampm">AM</span>
-                </label>
-                <label className="radio-wrapper-ampm">
-                  <input aria-label="PM Selection" type="radio" name="myRadio" id="radioOption1" ref={pmRef} value="PM" onChange={changeAmPmState} />
-                  <span className="custom-radio-ampm">PM</span>
-                </label>
-              </section>
-              <section className="hour-min-selector" aria-describedby="Button group to select hour for reservation.">
-                <h2><span className="required">*</span>Select a time:</h2>
-                <div className="hour-group">
-                  <button aria-label="Increment Hour" onClick={incrementHour} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m11.577 7.752-5.755 6.577c-.68.776-.128 1.99.903 1.99h11.51a1.2 1.2 0 0 0 .904-1.99l-5.755-6.576a1.2 1.2 0 0 0-1.807 0v-.001Z" />
-                  </svg></button>
-                  <div id="hour-element" className="arrow-btn-num">{hourState}</div>
-                  <button aria-label="Decrement Hour" onClick={decrementHour} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.577 16.248 5.822 9.669c-.68-.774-.128-1.99.903-1.99h11.51a1.2 1.2 0 0 1 .904 1.992l-5.755 6.576a1.198 1.198 0 0 1-1.807 0Z" />
-                  </svg></button>
-                </div>
-                <div className="middle-colon">:</div>
-                <div className="minute-group" aria-describedby="Button group to select minute for reservation. Are grouped in 15 minute increments.">
-                  <button aria-label="Increment Minutes" onClick={incrementMin} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m11.577 7.752-5.755 6.577c-.68.776-.128 1.99.903 1.99h11.51a1.2 1.2 0 0 0 .904-1.99l-5.755-6.576a1.2 1.2 0 0 0-1.807 0v-.001Z" />
-                  </svg></button>
-                  <div id="minute-element" className="arrow-btn-num">{minState === 0 ? "00" : minState}</div>
-                  <button aria-label="Decrement Minutes" onClick={decrementMin} className="arrow-btn"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.577 16.248 5.822 9.669c-.68-.774-.128-1.99.903-1.99h11.51a1.2 1.2 0 0 1 .904 1.992l-5.755 6.576a1.198 1.198 0 0 1-1.807 0Z" />
-                  </svg></button>
-                </div>
-              </section>
+              <ApiTimeFetch updateTimeState={updateTimeState} date={dateState}></ApiTimeFetch>
               <section className="people-group-selector" aria-describedby="Button Group to select how many adults and children are in the reservation group.">
                 <h2><span className="required">*</span>Adults:</h2>
                 <div className="adult-group">
@@ -403,7 +332,7 @@ const dateObject = new Date(currentDate); // Convert the 'currentDate' string to
             <form className="month-year-day-form">
               <section className="dropdown-group">
                 <Dropdown ref={monthDropdown} changeFunc={updateMonthSelectedState} defaultValTitle="Month" optionsArr={[
-                  "January" , "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}></Dropdown>
+                  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]}></Dropdown>
                 <Dropdown ref={yearDropdown} changeFunc={updateMonthBasedOnYearChange} defaultValTitle="Year" optionsArr={[
                   "2023", "2024", "2025"]}></Dropdown>
               </section>

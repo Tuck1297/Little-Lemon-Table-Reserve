@@ -2,6 +2,7 @@ import './App.css';
 import './Home.css';
 import './ReservationForm.css';
 import './ReserveConfirmFinished.css';
+import './ErrorMsg.css';
 
 import {Routes, Route} from 'react-router-dom';
 

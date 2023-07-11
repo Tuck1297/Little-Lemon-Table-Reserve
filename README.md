@@ -71,6 +71,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 What left to do before continue:
-1. front end authentication for forms
-2. functionality for selecting a date based on a particular month
-3. functionality for selecting a time and adults or children numbers
+3. Do promise api unit tests
+4. Do authentication unit tests
+5. Burn through the rest no matter what to finish tonight...
+6. do hour translation
+7. do error message display bug fix

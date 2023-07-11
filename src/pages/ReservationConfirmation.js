@@ -47,7 +47,7 @@ function ReservationConfirmation() {
       top: 0,
       behavior: 'smooth' // Optional, adds smooth scrolling effect
     });
-    setReservedTime(`${shareData.month}, ${shareData.day} ${shareData.year} at ${shareData.hour}:${shareData.min === 0 ? "00" : shareData.min} ${shareData.ampm}`);
+    setReservedTime(`${shareData.month}, ${shareData.day} ${shareData.year} at ${shareData.time}`);
     setGroupSize(shareData.children + shareData.adults);
     setNumAdults(shareData.adults);
     setNumChildren(shareData.children);

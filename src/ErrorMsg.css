@@ -1,0 +1,50 @@
+.errorBox {
+    position: sticky;
+    top: 0;
+    left: 50%;
+    width: fit-content;
+    height: fit-content;
+    /* margin-top: -200px; */
+    z-index: 1;
+    background-color: white;
+    border-radius: 20px;
+    border: solid 1px black;
+}
+
+.errorBox header {
+    padding: 1rem;
+    background-color: red;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    font-size: 18pt;
+}
+
+.msgBody {
+    padding: 1rem;
+    background-color: var(--highlight-color-1);
+    border-radius: 0 0 20px 20px;
+    font-size: 18pt;
+}
+
+header div {
+    margin-right: auto;
+}
+
+header button {
+    background-color: white;
+    color:black;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+header button:hover {
+    color: white;
+    background-color: black;
+}
+
+header button:active {
+    transform: scale(0.9);
+}
